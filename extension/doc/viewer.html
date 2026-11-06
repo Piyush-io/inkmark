@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta property="og:title" content="" />
+    <title>Inkmark document</title>
+    <link rel="stylesheet" href="viewer.css" />
+    <link rel="stylesheet" href="../content/marks.css" />
+  </head>
+  <body>
+    <div id="chrome">
+      <div class="left">
+        <strong>Inkmark</strong>
+        <span id="filename">Document</span>
+      </div>
+      <div class="right">
+        <button id="ai" class="ai" title="Highlight the important passages with your AI provider">Highlight key ideas</button>
+        <a id="original" hidden target="_blank" rel="noreferrer" title="Download the original file">Original</a>
+        <button id="open-file">Open file</button>
+      </div>
+    </div>
+    <div id="loading" role="status" hidden></div>
+    <div id="error" role="alert" hidden></div>
+    <section id="empty" hidden>
+      <h1>Read and highlight any document</h1>
+      <p>Word, PowerPoint, Excel, OpenDocument, RTF, EPUB and CSV files turn into a page you can highlight, annotate and export like any article. Conversion runs on this computer with anydoc; the file is not uploaded.</p>
+      <button id="empty-open" class="primary">Choose a file</button>
+      <p class="hint">or drop it anywhere on this page</p>
+    </section>
+    <article id="doc" hidden></article>
+    <script src="../lib/util.js"></script>
+    <script src="../lib/ai.js"></script>
+    <script src="../lib/locator.js"></script>
+    <script src="../lib/dom-highlight.js"></script>
+    <script src="../lib/client.js"></script>
+    <script src="../content/ui.js"></script>
+    <script src="../vendor/marked/marked.umd.js"></script>
+    <script type="module" src="viewer.js"></script>
+    <script src="../content/content.js"></script>
+  </body>
+</html>

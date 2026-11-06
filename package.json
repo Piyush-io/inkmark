@@ -1,0 +1,9 @@
+{
+  "name": "inkmark",
+  "private": true,
+  "description": "Chrome extension for highlighting web pages, PDFs and documents, with AI highlighting and unlimited export to Notion and Obsidian.",
+  "scripts": {
+    "test": "node tests/export.test.js && node tests/ai.test.js",
+    "pack": "./pack.sh"
+  }
+}

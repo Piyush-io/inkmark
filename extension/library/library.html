@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Inkmark library</title>
+    <link rel="stylesheet" href="../pages.css" />
+  </head>
+  <body>
+    <header class="top">
+      <div class="wordmark">Inkmark <em>Library</em></div>
+      <nav class="nav">
+        <button class="btn mark" id="copy-all">Copy all Markdown</button>
+        <button class="btn" id="download-all">Download .md</button>
+        <button class="btn" id="vault">Send to Obsidian</button>
+        <button class="btn" id="notion-all">Export to Notion</button>
+        <a class="quiet" href="../settings/settings.html">Settings</a>
+        <a class="quiet" href="../privacy.html">Privacy</a>
+      </nav>
+    </header>
+    <main class="wrap">
+      <input class="search" id="q" type="search" placeholder="Search titles, highlights, notes, tags" />
+      <div class="tags" id="tags"></div>
+      <p class="summary" id="summary"></p>
+      <div class="list" id="list"></div>
+    </main>
+    <p id="saved" role="status"></p>
+    <script src="../lib/util.js"></script>
+    <script src="../lib/markdown.js"></script>
+    <script src="../lib/client.js"></script>
+    <script src="library.js"></script>
+  </body>
+</html>

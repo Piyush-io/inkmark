@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Inkmark privacy</title>
+    <link rel="stylesheet" href="pages.css" />
+  </head>
+  <body>
+    <header class="top">
+      <div class="wordmark">Inkmark <em>Privacy</em></div>
+      <nav class="nav">
+        <a class="quiet" href="settings/settings.html">Settings</a>
+      </nav>
+    </header>
+    <main class="wrap" style="max-width:640px">
+      <h1 style="font-size:22px;font-weight:650;letter-spacing:-0.02em;margin:8px 0 16px">Privacy</h1>
+      <p class="help">Inkmark has no account and no server of its own. Highlights stay in this browser unless you export them.</p>
+
+      <section class="tile">
+        <h3>What stays on this device</h3>
+        <p class="help">Page URLs, titles, authors, selected text, notes, tags, and the PDFs and documents you open in Inkmark (Word, PowerPoint, Excel and similar files are converted to text on this computer). Settings, including any Notion token, Obsidian API key, AI provider key or Firecrawl key you paste. All of that lives in Chrome storage and IndexedDB on this computer.</p>
+      </section>
+
+      <section class="tile">
+        <h3>What leaves the browser</h3>
+        <p class="help">Nothing, until you export. Copy Markdown and Download .md stay local. Send to Notion posts that page’s highlights to Notion’s API, using the token you connected. Send to Obsidian writes a Markdown file to the Local REST API on this machine (127.0.0.1). AI highlighting is off until you add a provider in Settings; then <b>Highlight key ideas</b> sends the text of that page or document to the provider you picked (for example Cerebras, Anthropic, OpenAI or Google), with your key, and gets back the passages to highlight. If you turn on automatic highlighting, long articles are sent the first time you open them. If you add a Firecrawl key, Firecrawl fetches the page URL on its servers to extract the article. Those providers’ own privacy terms apply to what they receive. Inkmark does not send data to us. There is no analytics, ads, or crash reporting.</p>
+      </section>
+
+      <section class="tile">
+        <h3>Why the extension can read pages</h3>
+        <p class="help">A highlighter has to run on the page you are reading, so it can paint marks and remember the quote. It does not read the page until you select text, open the sidebar, ask for AI highlights, or return to a URL that already has highlights. With automatic AI highlighting on, it checks whether a page is a long article.</p>
+      </section>
+
+      <section class="tile">
+        <h3>Your copies</h3>
+        <p class="help">Settings → Download JSON exports everything stored here. Disconnect Notion or Obsidian to drop those keys. Uninstalling Inkmark deletes the local store.</p>
+      </section>
+
+      <p class="help">Questions: use the support link on the Chrome Web Store listing.</p>
+    </main>
+  </body>
+</html>

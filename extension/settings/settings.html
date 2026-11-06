@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Inkmark settings</title>
+    <link rel="stylesheet" href="../pages.css" />
+  </head>
+  <body>
+    <header class="top">
+      <div class="wordmark">Inkmark <em>Settings</em></div>
+      <nav class="nav">
+        <a class="quiet" href="../library/library.html">Library</a>
+        <a class="quiet" href="../privacy.html">Privacy</a>
+      </nav>
+    </header>
+    <main class="wrap">
+      <section class="tile">
+        <h3>Highlighting</h3>
+        <div class="field">
+          <label for="color">Default color</label>
+          <select id="color">
+            <option value="yellow">Yellow</option>
+            <option value="mint">Green</option>
+            <option value="sky">Blue</option>
+            <option value="rose">Pink</option>
+            <option value="peach">Orange</option>
+            <option value="lilac">Purple</option>
+          </select>
+        </div>
+        <p class="help">Shortcut Alt+S (Option+S on a Mac) highlights the selection in this color. Alt+H toggles the sidebar.</p>
+        <label class="check">
+          <input type="checkbox" id="auto-pdf" />
+          <span><b>Open PDFs in Inkmark</b>Chrome’s built-in PDF viewer can’t be highlighted, so PDF tabs switch to Inkmark’s viewer.</span>
+        </label>
+      </section>
+
+      <section class="tile">
+        <h3>AI highlighting</h3>
+        <p class="help" id="ai-status">Not connected.</p>
+        <p class="help" style="margin-top:8px">Connect a model and Inkmark highlights the passages worth keeping, colored by kind: <b>key point</b>, <b>evidence</b>, <b>definition</b>, <b>takeaway</b>, <b>caveat</b>. Each highlight keeps a one-line reason as its note. The page’s text goes straight from this browser to the provider you pick, with your key.</p>
+        <div class="field">
+          <label for="ai-provider">Provider</label>
+          <select id="ai-provider"></select>
+        </div>
+        <div class="field" id="ai-base-wrap" hidden>
+          <label for="ai-base">Base URL</label>
+          <input id="ai-base" placeholder="https://…/v1" autocomplete="off" />
+        </div>
+        <div class="field">
+          <label for="ai-model">Model</label>
+          <input id="ai-model" list="ai-models" autocomplete="off" />
+          <datalist id="ai-models"></datalist>
+        </div>
+        <div class="field" id="ai-key-wrap">
+          <label for="ai-key">API key</label>
+          <input id="ai-key" type="password" autocomplete="off" />
+        </div>
+        <div class="row">
+          <button class="btn mark" id="ai-test">Test connection</button>
+        </div>
+        <div class="field">
+          <label for="ai-density">How much to highlight</label>
+          <select id="ai-density">
+            <option value="light">Light: only the essentials</option>
+            <option value="normal">Normal</option>
+            <option value="dense">Dense: study notes</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="ai-focus">What matters to you</label>
+          <textarea id="ai-focus" rows="6" spellcheck="false"></textarea>
+          <p class="help">One line per thing to look for. <a href="#" id="ai-focus-reset">Reset to default</a></p>
+        </div>
+        <label class="check">
+          <input type="checkbox" id="ai-auto" />
+          <span><b>Highlight articles automatically</b>When you open a long article, Inkmark highlights it once without a click. Each article is sent to the provider the first time you open it.</span>
+        </label>
+
+        <details class="adv" id="firecrawl-setup">
+          <summary>Firecrawl (optional): cleaner text from busy or script-heavy pages</summary>
+          <p class="help" style="margin-top:8px">Firecrawl fetches the page on its servers and returns just the article, so menus, comments and ads never reach the model. It can’t see pages behind your login. Get a key at <a href="https://www.firecrawl.dev/app/api-keys" target="_blank" rel="noreferrer">firecrawl.dev</a>.</p>
+          <div class="field">
+            <label for="fc-key">Firecrawl API key</label>
+            <input id="fc-key" type="password" autocomplete="off" placeholder="fc-…" />
+          </div>
+          <div class="field">
+            <label for="fc-mode">Use Firecrawl</label>
+            <select id="fc-mode">
+              <option value="off">Never</option>
+              <option value="fallback">When a page has little readable text</option>
+              <option value="always">For every web page</option>
+            </select>
+          </div>
+        </details>
+        <p class="help" style="margin-top:14px">Word, PowerPoint, Excel, EPUB and other files: <a href="../doc/viewer.html">open them in Inkmark’s document reader</a> (converted on this computer with anydoc), then highlight by hand or with AI.</p>
+      </section>
+
+      <section class="tile">
+        <h3>Notion</h3>
+        <p class="help" id="notion-status">Not connected.</p>
+        <div class="row">
+          <button class="btn mark" id="notion-connect">Connect Notion</button>
+          <button class="btn quiet" id="notion-refresh">Refresh pages</button>
+          <button class="btn quiet" id="notion-disconnect">Disconnect</button>
+        </div>
+        <div class="field" id="notion-parent-wrap" hidden>
+          <label for="notion-parent">Send highlights to</label>
+          <select id="notion-parent" class="wide"></select>
+        </div>
+
+        <details class="adv" id="notion-oauth-setup">
+          <summary>One-time OAuth app (needed for Sign in with Notion)</summary>
+          <p class="help" style="margin-top:8px">Create a public integration at Notion, paste this redirect URL, then paste the client ID and secret here. After that, Connect opens Notion’s Allow-access screen, same idea as Web Highlights.</p>
+          <div class="field">
+            <label for="redirect">Redirect URL</label>
+            <div class="copy">
+              <input id="redirect" readonly />
+              <button class="btn quiet" id="copy-redirect" type="button">Copy</button>
+            </div>
+          </div>
+          <p class="help"><a href="https://www.notion.so/my-integrations" target="_blank" rel="noreferrer">Open Notion integrations</a>. New integration → Public. Redirect URIs: paste the URL above.</p>
+          <div class="field">
+            <label for="client-id">OAuth client ID</label>
+            <input id="client-id" autocomplete="off" />
+          </div>
+          <div class="field">
+            <label for="client-secret">OAuth client secret</label>
+            <input id="client-secret" type="password" autocomplete="off" />
+          </div>
+        </details>
+
+        <details class="adv">
+          <summary>Or paste an internal integration token</summary>
+          <p class="help" style="margin-top:8px">Faster if you do not want a public OAuth app. Create an Internal integration, share a page with it, paste the secret. Inkmark lists those pages so you never copy a page ID.</p>
+          <div class="field">
+            <label for="token">Integration token</label>
+            <input id="token" type="password" autocomplete="off" placeholder="ntn_ or secret_" />
+          </div>
+          <button class="btn quiet" id="token-connect" type="button">Use this token</button>
+        </details>
+      </section>
+
+      <section class="tile">
+        <h3>Obsidian</h3>
+        <p class="help" id="obsidian-status">Not connected.</p>
+        <div class="row">
+          <button class="btn mark" id="obsidian-rest">Connect Local REST API</button>
+          <button class="btn quiet" id="obsidian-folder">Connect vault folder</button>
+        </div>
+        <p class="help" style="margin-top:10px">REST API writes notes straight into the vault, no size cap. Install the community plugin “Local REST API”, turn on its HTTP server (port 27123), copy the API key.</p>
+        <div class="field">
+          <label for="rest-key">Local REST API key</label>
+          <input id="rest-key" type="password" autocomplete="off" />
+        </div>
+        <div class="field">
+          <label for="vault">Vault name (for obsidian:// fallback)</label>
+          <input id="vault" placeholder="My vault" />
+        </div>
+        <div class="field">
+          <label for="obs-folder">Folder inside the vault</label>
+          <input id="obs-folder" placeholder="Inkmark" />
+        </div>
+      </section>
+
+      <section class="tile">
+        <h3>Backup</h3>
+        <p class="help">Everything lives in this browser. Export a JSON copy if you switch machines.</p>
+        <div class="row">
+          <button class="btn" id="export-json">Download JSON</button>
+          <button class="btn quiet" id="import-json">Import JSON</button>
+          <input id="file" type="file" accept="application/json" hidden />
+        </div>
+      </section>
+
+      <p id="saved" role="status"></p>
+    </main>
+    <script src="../lib/util.js"></script>
+    <script src="../lib/ai.js"></script>
+    <script src="../lib/client.js"></script>
+    <script src="settings.js"></script>
+  </body>
+</html>

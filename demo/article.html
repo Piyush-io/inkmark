@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>A room of one's own · Inkmark demo</title>
+    <style>
+      body {
+        margin: 0;
+        background: #eef3ec;
+        color: #14261c;
+        font-family: "Iowan Old Style", "Palatino Linotype", Palatino, serif;
+      }
+      article {
+        max-width: 640px;
+        margin: 0 auto;
+        padding: 48px 24px 120px;
+        font-size: 19px;
+        line-height: 1.55;
+      }
+      h1 { font-size: 34px; letter-spacing: -0.03em; margin-bottom: 8px; }
+      .lede { color: #4e6650; font-size: 15px; margin-bottom: 32px; }
+      .tldr { border-left: 3px solid #c9d6c6; padding: 4px 0 4px 18px; margin: 28px 0 36px; }
+      .tldr h2 { font-size: 20px; margin: 0 0 10px; letter-spacing: -0.03em; }
+      .tldr ul { margin: 0; padding-left: 1.1em; }
+      .tldr li { margin: 0.55em 0; }
+      .tldr code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.86em; }
+    </style>
+    <link rel="stylesheet" href="../extension/content/marks.css" />
+  </head>
+  <body>
+    <article>
+      <h1>A room of one's own</h1>
+      <p class="lede">Demo page for Inkmark. Select any sentence and pick a color. Open the sidebar with the highlighter toolbar, copy Markdown, or send the page to Notion if a token is saved.</p>
+      <div class="tldr">
+        <h2>tl;dr</h2>
+        <ul>
+          <li>
+            Frontier training is a systems problem: data mixture, architecture, and stability choices dominate most algorithmic tweaks.
+          </li>
+          <li>
+            Start from a strong baseline and ablate fast and reliably; derisk changes and avoid multi-variable edits.
+          </li>
+          <li>
+            For long context, document masking + RNoPE/YaRN-style scaling is a robust default; attention variants trade compute for reach.
+          </li>
+          <li>
+            <code>GQA</code> with small groups (2/4/8 groups) typically outperforms MHA and MQA in ablations at similar model scales; MLA cuts KV cache but raises implementation complexity.
+          </li>
+          <li>
+            MoE is efficient when it is load-balanced; routing, auxiliary or bias balancing, and global stats are non-negotiable.
+          </li>
+          <li>
+            Tokenizer design should mirror target data; vocab size trades embedding cost against token compression and KV cache.
+          </li>
+          <li>
+            AdamW is still the default; Muon can help but needs careful infra (all-to-all, padding, scaling quirks).
+          </li>
+        </ul>
+      </div>
+      <p>The title needs some explaining. Oxford is a little inland, and the river, as you know, runs through meadows. It was a bright October morning, and the sky, washed by overnight rain, was almost white. I was walking along the river bank, as I had done many times, thinking about women and fiction, which is a very small subject, and yet it has a way of opening into rooms you did not know were there.</p>
+      <p>All I could do was to offer you an opinion upon one minor point, a woman must have money and a room of her own if she is to write fiction. That, as you will see, leaves the great problem of the true nature of woman and the true nature of fiction unsolved.</p>
+      <p>I want you to imagine a room, like many thousands, with a window looking over a garden, and there is a table, and on the table a notebook. The lock on the door is not a metaphor. It is a lock. Without it, the afternoon dissolves into errands.</p>
+      <p>Fiction is like a spider's web, attached ever so lightly perhaps, but still attached to life at all four corners. Often the attachment is scarcely perceptible. When the web is pulled askew, hooked up at the edge, torn in the middle, one remembers that these webs are not spun in midair by incorporeal creatures, but are the work of suffering human beings, and are attached to grossly material things, like health and money and the houses we live in.</p>
+      <p>One cannot think well, love well, sleep well, if one has not dined well. The lamp in the window is a small thing, and so is a quiet hour, and so is a highlighter dragged across a sentence you intend to keep.</p>
+    </article>
+    <script src="../extension/lib/util.js"></script>
+    <script src="../extension/lib/locator.js"></script>
+    <script src="../extension/lib/dom-highlight.js"></script>
+    <script src="../extension/lib/markdown.js"></script>
+    <script src="../extension/lib/notion.js"></script>
+    <script src="../extension/lib/store.js"></script>
+    <script src="../extension/lib/client.js"></script>
+    <script src="memory.js"></script>
+    <script src="../extension/content/ui.js"></script>
+    <script src="../extension/content/content.js"></script>
+    <script>
+      if (location.search.includes("test=1")) {
+        window.addEventListener("load", async () => {
+          try {
+            await new Promise((r) => setTimeout(r, 80));
+            const ul = document.querySelector(".tldr ul");
+            const across = document.createRange();
+            across.selectNodeContents(ul);
+            Inkmark.wrapRange(across, "wrap-check", "peach");
+            if (ul.querySelector(":scope > mark")) throw new Error("mark as ul child");
+            const stray = [...ul.querySelectorAll("mark")].some((m) => /^\s*$/.test(m.textContent));
+            if (stray) throw new Error("whitespace-only mark");
+            if (!ul.querySelector("li mark")) throw new Error("list text not wrapped");
+            if (!ul.querySelector("code mark") && !ul.querySelector("mark code")) throw new Error("inline code not wrapped");
+            Inkmark.unwrapHighlight("wrap-check", document.body);
+            const p = document.querySelector("article p:nth-of-type(3)");
+            const range = document.createRange();
+            range.selectNodeContents(p);
+            const sel = window.getSelection();
+            sel.removeAllRanges();
+            sel.addRange(range);
+            document.dispatchEvent(new MouseEvent("mouseup", { bubbles: true, button: 0 }));
+            await new Promise((r) => setTimeout(r, 40));
+            const host = document.querySelector("inkmark-host");
+            const swatch = host.shadowRoot.querySelector(".swatch");
+            swatch.click();
+            await new Promise((r) => setTimeout(r, 250));
+            const mark = document.querySelector("mark[data-inkmark-id]");
+            const md = window.Inkmark.pageToMarkdown({
+              title: document.title,
+              url: location.href,
+              createdAt: Date.now(),
+              updatedAt: Date.now(),
+              highlights: [{ text: mark.textContent, color: "yellow", note: "", tags: [], createdAt: Date.now() }]
+            });
+            if (!mark) throw new Error("no mark");
+            if (!md.includes("money and a room")) throw new Error("markdown missing quote");
+            document.title = "INKMARK_PASS";
+            document.documentElement.setAttribute("data-inkmark-test", "pass");
+          } catch (err) {
+            document.title = "INKMARK_FAIL " + err.message;
+            document.documentElement.setAttribute("data-inkmark-test", "fail");
+          }
+        });
+      }
+    </script>
+  </body>
+</html>

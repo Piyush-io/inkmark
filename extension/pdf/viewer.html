@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Inkmark PDF</title>
+    <link rel="stylesheet" href="viewer.css" />
+    <link rel="stylesheet" href="../content/marks.css" />
+  </head>
+  <body>
+    <div id="chrome">
+      <div class="left">
+        <strong>Inkmark</strong>
+        <span id="filename">PDF</span>
+      </div>
+      <div class="right">
+        <div class="zoom" role="group" aria-label="Zoom">
+          <button id="zoom-out" title="Zoom out (Ctrl/⌘ −)" aria-label="Zoom out">−</button>
+          <button id="zoom-level" title="Fit to width (Ctrl/⌘ 0)">100%</button>
+          <button id="zoom-in" title="Zoom in (Ctrl/⌘ +)" aria-label="Zoom in">+</button>
+        </div>
+        <button id="ai" class="ai" title="Highlight the important passages with your AI provider">Highlight key ideas</button>
+        <a id="original" hidden title="Open in Chrome’s PDF viewer">Chrome viewer</a>
+        <button id="open-file">Open local file</button>
+      </div>
+    </div>
+    <div id="scroller" tabindex="-1">
+      <div id="loading" role="status" hidden></div>
+      <div id="error" hidden></div>
+      <div id="viewer" data-inkmark-kind="pdf"></div>
+    </div>
+    <script src="pdf.min.js"></script>
+    <script src="../lib/util.js"></script>
+    <script src="../lib/ai.js"></script>
+    <script src="../lib/locator.js"></script>
+    <script src="../lib/dom-highlight.js"></script>
+    <script src="../lib/client.js"></script>
+    <script src="../content/ui.js"></script>
+    <script src="viewer.js"></script>
+    <script src="../content/content.js"></script>
+  </body>
+</html>

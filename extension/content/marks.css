@@ -1,0 +1,51 @@
+mark[data-inkmark-id] {
+  cursor: pointer;
+  color: inherit;
+  -webkit-text-fill-color: inherit;
+  border-radius: 0.14em;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+  padding: 0.05em 0.12em;
+  margin: 0 -0.12em;
+}
+mark[data-inkmark-id] {
+  transition: filter 0.15s ease;
+}
+mark[data-inkmark-id]:hover {
+  filter: saturate(1.6) brightness(0.97);
+}
+mark[data-inkmark-id].inkmark-flash {
+  animation: inkmark-flash 1.2s ease-out;
+}
+@keyframes inkmark-flash {
+  0%, 35% { box-shadow: 0 0 0 3px rgba(90, 156, 242, 0.55); }
+  100% { box-shadow: 0 0 0 3px rgba(90, 156, 242, 0); }
+}
+ul > mark[data-inkmark-id],
+ol > mark[data-inkmark-id],
+dl > mark[data-inkmark-id],
+table > mark[data-inkmark-id],
+thead > mark[data-inkmark-id],
+tbody > mark[data-inkmark-id],
+tfoot > mark[data-inkmark-id],
+tr > mark[data-inkmark-id] {
+  display: none;
+}
+/* AI highlights: a faint underline tells them apart from your own. */
+mark[data-inkmark-ai] {
+  box-shadow: inset 0 -0.09em 0 rgba(30, 29, 26, 0.22);
+}
+/* Drawn in like a highlighter pen, left to right, one passage after another. */
+mark[data-inkmark-id].inkmark-sweep {
+  background-color: transparent !important;
+  background-image: linear-gradient(var(--inkmark-sweep), var(--inkmark-sweep));
+  background-repeat: no-repeat;
+  background-size: 0% 100%;
+  animation: inkmark-sweep 0.55s cubic-bezier(0.3, 0.7, 0.2, 1) forwards;
+}
+@keyframes inkmark-sweep {
+  to { background-size: 100% 100%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  mark[data-inkmark-id].inkmark-sweep { animation: none; background-size: 100% 100%; }
+}

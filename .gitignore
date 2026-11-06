@@ -1,0 +1,13 @@
+.DS_Store
+*.log
+.env
+.vscode/
+.idea/
+
+# Build output
+dist/
+*.zip
+
+# Promo video project
+intro/node_modules/
+intro/out/
